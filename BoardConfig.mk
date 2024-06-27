@@ -48,9 +48,8 @@ TARGET_USES_REMOTEPROC := true
 BOARD_BOOT_HEADER_VERSION := 4
 BOARD_MKBOOTIMG_ARGS := --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
-BOARD_KERNEL_IMAGE_NAME := kernel
 BOARD_RAMDISK_USE_LZ4 := true
-TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/$(BOARD_KERNEL_IMAGE_NAME)
+TARGET_PREBUILT_KERNEL := /dev/null
 
 # Partition Info
 BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED := true
@@ -111,7 +110,6 @@ TARGET_RECOVERY_DEVICE_MODULES += \
     libxml2 \
     vendor.display.config@1.0 \
     vendor.display.config@2.0
-TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
 
 # Use mke2fs to create ext4 images
 TARGET_USES_MKE2FS := true
@@ -131,9 +129,9 @@ PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
 PLATFORM_SECURITY_PATCH := 2099-12-31
 VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery.fstab
 # Extras
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
-TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
 
 TARGET_SCREEN_HEIGHT := 2460
 TARGET_SCREEN_WIDTH := 1080
@@ -147,13 +145,13 @@ TW_THEME := portrait_hdpi
 TW_BACKUP_EXCLUSIONS := /data/fonts/files
 TW_CUSTOM_CPU_TEMP_PATH := "/sys/devices/virtual/thermal/thermal_zone34/temp"
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
-TW_DEFAULT_BRIGHTNESS := 420
-TW_MAX_BRIGHTNESS := 420
+TW_DEFAULT_BRIGHTNESS := 547
+TW_MAX_BRIGHTNESS := 2047
 TW_QCOM_ATS_OFFSET := 1666528204500
 TW_EXCLUDE_APEX := true
 TW_EXCLUDE_DEFAULT_USB_INIT := true
 TW_EXTRA_LANGUAGES := true
-TW_FRAMERATE := 120
+TW_FRAMERATE := 60
 TW_INCLUDE_CRYPTO := true
 TW_NO_EXFAT_FUSE := true
 TW_NO_HAPTICS := true
@@ -174,13 +172,14 @@ RECOVERY_LIBRARY_SOURCE_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/libxml2.so \
     $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@1.0.so \
     $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@2.0.so
-TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko"
+
+TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko camera.ko"
 TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
 
 #TW_SUPPORT_INPUT_AIDL_HAPTICS := true
 #TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
-#TW_SUPPORT_INPUT_AIDL_HAPTICS_FQNAME := "IVibrator/vibratorfeature"
-#
+#TW_SUPPORT_INPUT_AIDL_HAPTICS_FQNAME := "IVibrator/default"
+
 #TARGET_RECOVERY_DEVICE_MODULES += libexpat
 #RECOVERY_LIBRARY_SOURCE_FILES += \
 #     $(TARGET_OUT_SHARED_LIBRARIES)/libexpat.so
@@ -197,26 +196,3 @@ TARGET_RECOVERY_DEVICE_MODULES += strace
 RECOVERY_BINARY_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/strace
 #TARGET_RECOVERY_DEVICE_MODULES += twrpdec
 #RECOVERY_BINARY_SOURCE_FILES += $(TARGET_RECOVERY_ROOT_OUT)/sbin/twrpdec
-
-#
-# For local builds only
-#
-# TWRP zip installer
-ifneq ($(wildcard bootable/recovery/installer/.),)
-    USE_RECOVERY_INSTALLER := true
-    RECOVERY_INSTALLER_PATH := bootable/recovery/installer
-endif
-
-# Custom TWRP Versioning
-ifneq ($(wildcard device/common/version-info/.),)
-    # Uncomment the below line to use custom device version
-    include device/common/version-info/custom_twrp_version.mk
-
-    # version prefix is optional - the default value is "LOCAL" if nothing is set in device tree
-    CUSTOM_TWRP_VERSION_PREFIX := CPTB
-
-    ifeq ($(CUSTOM_TWRP_VERSION),)
-        CUSTOM_TWRP_VERSION := $(shell date +%Y%m%d)-01
-    endif
-endif
-
