@@ -24,21 +24,6 @@ LOGMSG() {
 	echo "I:$@" >> /tmp/recovery.log;
 }
 
-do_prep() {
-	local D=/data/cache/recovery/;
-	if [ ! -d $D ]; then
-		LOGMSG "Creating $D ...";
-		mkdir -p $D;
-	fi
-
-	D=/metadata/ota/;
-	mount /metadata 2>/dev/null;
-	if [ -d $D ]; then
-		LOGMSG "Wiping $D ...";
-		rm -rf $D 2>/dev/null;
-	fi
-}
-
 backup_fox() {
 	local f=$1;
 	if [ -f $f ]; then
