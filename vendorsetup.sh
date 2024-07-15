@@ -43,8 +43,8 @@ export ALLOW_MISSING_DEPENDENCIES=true
 
 # Splash Modification & Maintainer logo 
 
-sed -i 's/value="#D34E38"/value="#000000"/g' bootable/recovery/gui/theme/portrait_hdpi/splash.xml
-sed -i 's/value="#FF8038"/value="#000000"/g' bootable/recovery/gui/theme/portrait_hdpi/splash.xml
+sed -i 's/value="#D34E38"/value="#000000"/g' /bootable/recovery/gui/theme/portrait_hdpi/splash.xml
+sed -i 's/value="#FF8038"/value="#000000"/g' /bootable/recovery/gui/theme/portrait_hdpi/splash.xml
 
 \cp -fp $PWD/device/xiaomi/sky/Addons/orginal.png gui/theme/portrait_hdpi/images/Splash/original.png
 \cp -fp $PWD/device/xiaomi/sky/Addons/maintainer.png gui/theme/portrait_hdpi/images/Default/About/maintainer.png
