@@ -51,4 +51,4 @@ sed -i 's/value="#FF8038"/value="#000000"/g' "$D1"/recovery/gui/theme/portrait_h
 
 \cp -fp $PWD/device/xiaomi/sky/Addons/orginal.png "$D2"/theme/portrait_hdpi/images/Splash/original.png
 \cp -fp $PWD/device/xiaomi/sky/Addons/maintainer.png "$D2"/theme/portrait_hdpi/images/Default/About/maintainer.png
-\cp -fp $PWD/device/xiaomi/sky/Addons/logo_w.png "$D2"/theme/portrait_hdpi/images/Splash/logo_w.png
+ # \cp -fp $PWD/device/xiaomi/sky/Addons/logo_w.png "$D2"/theme/portrait_hdpi/images/Splash/logo_w.png
